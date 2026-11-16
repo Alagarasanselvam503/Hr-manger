@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Print Employee ID Card</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    padding: 30px;
+}
+
+.id-card {
+    width: 350px;
+    margin: 30px auto;
+    background: white;
+    border: 2px solid #1B3A6B;
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.header {
+    background: #1B3A6B;
+    color: white;
+    padding: 18px;
+    font-weight: bold;
+}
+
+.body {
+    padding: 22px;
+}
+
+.photo {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #1B3A6B;
+}
+
+.name {
+    color: #1B3A6B;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.details {
+    text-align: left;
+    margin-top: 20px;
+    line-height: 2;
+    font-size: 13px;
+}
+
+.details p {
+    border-bottom: 1px solid #eee;
+}
+
+.print-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 25px;
+    background: #1B3A6B;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+@media print {
+    body {
+        background: white;
+        padding: 0;
+    }
+
+    .print-btn {
+        display: none;
+    }
+
+    .id-card {
+        margin: 20px auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="id-card">
+
+    <div class="header">
+        EMPLOYEE ID CARD
+    </div>
+
+    <div class="body">
+
+        {% if card.employee.photo %}
+            <img src="{{ card.employee.photo.url }}" class="photo">
+        {% endif %}
+
+        <div class="name">
+            {{ card.employee.name }}
+        </div>
+
+        <p>{{ card.employee.designation }}</p>
+
+        <div class="details">
+            <p><b>Employee ID:</b> {{ card.employee.emp_id }}</p>
+            <p><b>Department:</b> {{ card.employee.depertment|default:"-" }}</p>
+            <p><b>DOB:</b> {{ card.DOB|date:"d-m-Y"|default:"-" }}</p>
+            <p><b>Blood Group:</b> {{ card.Blood_Group|default:"-" }}</p>
+            <p><b>Emergency:</b> {{ card.Emergency_contact_No|default:"-" }}</p>
+            <p><b>Address:</b> {{ card.address|default:"-" }}</p>
+        </div>
+
+    </div>
+
+</div>
+
+<button class="print-btn" onclick="window.print()">
+    Print ID Card
+</button>
+
+</body>
+</html>

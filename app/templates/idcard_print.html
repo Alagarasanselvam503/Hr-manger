@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Print Employee ID Card</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #F4F6F8;
+    padding: 30px;
+}
+
+.id-card {
+    width: 340px;
+    min-height: 490px;
+    margin: 20px auto;
+    background: white;
+    border: 2px solid #1B3A6B;
+    border-radius: 15px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.header {
+    background: #1B3A6B;
+    color: white;
+    padding: 20px;
+}
+
+.header h2 {
+    font-size: 19px;
+}
+
+.header p {
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+.body {
+    padding: 20px;
+}
+
+.photo {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #1B3A6B;
+}
+
+.initial {
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    border-radius: 50%;
+    background: #E6F1FB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1B3A6B;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.name {
+    color: #1B3A6B;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.designation {
+    color: #777;
+    font-size: 13px;
+    margin: 5px;
+}
+
+.emp-id {
+    display: inline-block;
+    background: #E6F1FB;
+    color: #185FA5;
+    padding: 6px 15px;
+    border-radius: 20px;
+    margin: 10px;
+    font-size: 12px;
+}
+
+.details {
+    text-align: left;
+    font-size: 12px;
+    line-height: 2;
+    margin-top: 12px;
+}
+
+.details div {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.details strong {
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.footer {
+    background: #1B3A6B;
+    color: white;
+    padding: 12px;
+    font-size: 11px;
+}
+
+.print-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 22px;
+    background: #1B3A6B;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+@media print {
+    body {
+        background: white;
+        padding: 0;
+    }
+
+    .id-card {
+        margin: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .print-btn {
+        display: none;
+    }
+
+    @page {
+        size: auto;
+        margin: 10mm;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="id-card">
+
+    <div class="header">
+        <h2>EMPLOYEE ID CARD</h2>
+        <p>EMPLOYEE IDENTIFICATION</p>
+    </div>
+
+    <div class="body">
+
+        {% if card.employee.photo %}
+
+            <img
+                src="{{ card.employee.photo.url }}"
+                class="photo"
+                alt="Employee Photo">
+
+        {% else %}
+
+            <div class="initial">
+                {{ card.employee.name|first|upper }}
+            </div>
+
+        {% endif %}
+
+        <div class="name">
+            {{ card.employee.name }}
+        </div>
+
+        <div class="designation">
+            {{ card.employee.designation }}
+        </div>
+
+        <div class="emp-id">
+            {{ card.employee.emp_id }}
+        </div>
+
+        <div class="details">
+
+            <div>
+                <span>Department</span>
+                <strong>{{ card.employee.depertment|default:"-" }}</strong>
+            </div>
+
+            <div>
+                <span>Date of Birth</span>
+                <strong>{{ card.DOB|date:"d-m-Y"|default:"-" }}</strong>
+            </div>
+
+            <div>
+                <span>Blood Group</span>
+                <strong>{{ card.Blood_Group|default:"-" }}</strong>
+            </div>
+
+            <div>
+                <span>Emergency Contact</span>
+                <strong>{{ card.Emergency_contact_No|default:"-" }}</strong>
+            </div>
+
+            <div>
+                <span>Address</span>
+                <strong>{{ card.address|default:"-" }}</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        AUTHORIZED EMPLOYEE IDENTIFICATION
+    </div>
+
+</div>
+
+<button class="print-btn" onclick="window.print()">
+    🖨 Print / Save as PDF
+</button>
+
+<script>
+window.onload = function() {
+    window.print();
+};
+</script>
+
+</body>
+</html>

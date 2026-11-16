@@ -1,0 +1,28 @@
+{% include "hr_navbar.html" %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Employee</title>
+</head>
+<body>
+
+    <h2>Select Employee to Create ID Card</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <select name="employee" required onchange="this.form.submit()">
+            <option value="">-- Select Employee --</option>
+
+            {% for emp in employees %}
+                <option value="{{ emp.id }}">
+                    {{ emp.name }} - {{ emp.emp_id }}
+                </option>
+            {% endfor %}
+        </select>
+
+    </form>
+
+</body>
+</html>

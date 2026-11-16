@@ -142,6 +142,30 @@ def id_cords_detalis(request, emp_id):
     return render(request, "id_card.html", {"form": form, "emp": emp})
 
 
+from django.contrib import messages
+from django.views.decorators.http import require_POST
+
+
+# Print ID Card
+def print_idcard_view(request, id):
+    card = get_object_or_404(Idcord, id=id)
+
+    return render(request, 'print_idcard.html', {
+        'card': card
+    })
+
+
+# Delete ID Card
+@require_POST
+def delete_idcard_view(request, id):
+    card = get_object_or_404(Idcord, id=id)
+
+    card.delete()
+
+    messages.success(request, "Employee ID Card deleted successfully!")
+
+    return redirect('idcards')
+
 # ── Attendance List ───────────────────────────────────────────────
 def attendance_view(request):
     return render(request, 'attendance.html', {

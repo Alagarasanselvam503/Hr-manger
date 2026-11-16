@@ -1,102 +1,393 @@
+
 {% include "hr_navbar.html" %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Employees</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',sans-serif;background:#F4F6F8}
-.content{padding:1.5rem}
-.top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:10px}
-.page-title{font-size:20px;font-weight:700;color:#1B3A6B}
-.btn{font-size:12px;font-weight:600;padding:7px 16px;border-radius:7px;cursor:pointer;border:none;text-decoration:none;display:inline-block}
-.btn-primary{background:#1B3A6B;color:#fff}
-.filter-row{display:flex;gap:10px;margin-bottom:1.25rem;flex-wrap:wrap}
-.filter-row input,.filter-row select{font-size:13px;padding:7px 12px;border:1px solid #D1D5DB;border-radius:7px;background:#fff}
-.card{background:#fff;border:1px solid #E8ECF0;border-radius:10px;padding:1.25rem}
-.badge{font-size:10px;font-weight:600;padding:2px 10px;border-radius:999px;background:#E6F1FB;color:#185FA5}
-.table{width:100%;border-collapse:collapse;font-size:13px}
-.table th{padding:9px 12px;text-align:left;font-size:11px;font-weight:600;color:#6B7280;text-transform:uppercase;border-bottom:2px solid #E8ECF0}
-.table td{padding:9px 12px;border-bottom:1px solid #F3F4F6}
-.table tr:hover td{background:#FAFBFC}
-.avatar-sm{width:32px;height:32px;border-radius:50%;object-fit:cover}
-.avatar-init{width:32px;height:32px;border-radius:50%;background:#E6F1FB;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#1B3A6B}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #F4F6F8;
+}
+
+.content {
+    padding: 1.5rem;
+}
+
+.top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.page-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1B3A6B;
+}
+
+.btn {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 7px 16px;
+    border-radius: 7px;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.btn-primary {
+    background: #1B3A6B;
+    color: #fff;
+}
+
+.btn-id {
+    background: #EAF3DE;
+    color: #27500A;
+}
+
+.filter-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.filter-row input,
+.filter-row select {
+    font-size: 13px;
+    padding: 7px 12px;
+    border: 1px solid #D1D5DB;
+    border-radius: 7px;
+    background: #fff;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #E8ECF0;
+    border-radius: 10px;
+    padding: 1.25rem;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 850px;
+}
+
+.table th {
+    padding: 9px 12px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    color: #6B7280;
+    text-transform: uppercase;
+    border-bottom: 2px solid #E8ECF0;
+}
+
+.table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #F3F4F6;
+}
+
+.table tr:hover td {
+    background: #FAFBFC;
+}
+
+.avatar-sm {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.avatar-init {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #E6F1FB;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #1B3A6B;
+}
+
+.badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: #E6F1FB;
+    color: #185FA5;
+}
+
+.action-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    padding: 5px 9px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.view-btn {
+    background: #EAF3DE;
+    color: #27500A;
+}
+
+.edit-btn {
+    background: #E6F1FB;
+    color: #185FA5;
+}
+
+.delete-btn {
+    background: #FCEBEB;
+    color: #A32D2D;
+}
+
+.id-btn {
+    background: #1B3A6B;
+    color: white;
+}
+
+.empty-message {
+    text-align: center;
+    padding: 2rem;
+    color: #9CA3AF;
+}
+
+@media(max-width: 600px) {
+    .content {
+        padding: 12px;
+    }
+
+    .top-row {
+        align-items: flex-start;
+    }
+
+    .filter-row input,
+    .filter-row select {
+        width: 100%;
+    }
+}
 </style>
 </head>
+
 <body>
+
 <div class="content">
-  <div class="top-row">
-    <div class="page-title">👥 Employees <span style="font-size:14px;color:#6B7280;font-weight:400">({{ emp.count }})</span></div>
-    <a href="{% url 'create-employee' %}" class="btn btn-primary">➕ Add Employee</a>
-  </div>
 
-  <!-- Filter Form -->
-  <form method="get" class="filter-row">
-    <input type="text" name="search" placeholder="🔍 Search name..." value="{{ search }}">
-    <select name="department">
-      <option value="">All Departments</option>
-      <option value="HR"        {% if department == 'HR' %}selected{% endif %}>HR</option>
-      <option value="IT"        {% if department == 'IT' %}selected{% endif %}>IT</option>
-      <option value="Finance"   {% if department == 'Finance' %}selected{% endif %}>Finance</option>
-      <option value="Marketing" {% if department == 'Marketing' %}selected{% endif %}>Marketing</option>
-      <option value="Sales"     {% if department == 'Sales' %}selected{% endif %}>Sales</option>
-    </select>
-    <button type="submit" class="btn btn-primary">Filter</button>
-    <a href="{% url 'employee' %}" class="btn" style="background:#F3F4F6;color:#374151">Clear</a>
-  </form>
+    <!-- Heading -->
+    <div class="top-row">
 
-  <!-- Table -->
-  <div class="card">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Photo</th>
-          <th>Emp ID</th>
-          <th>Name</th>
-          <th>Dept</th>
-          <th>Designation</th>
-          <th>Phone</th>
-          <th>Salary</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for e in emp %}
-        <tr>
-          <td>
-            {% if e.photo %}
-              <img src="{{ e.photo.url }}" class="avatar-sm">
-            {% else %}
-              <span class="avatar-init">{{ e.name|first|upper }}</span>
-            {% endif %}
-          </td>
-          <td><span class="badge">{{ e.emp_id }}</span></td>
-          <td>
-            <a href="{% url 'employee_detail' e.id %}" style="color:#1B3A6B;font-weight:600;text-decoration:none">
-              {{ e.name }}
-            </a>
-          </td>
-          <td>{{ e.depertment }}</td>
-          <td>{{ e.designation }}</td>
-          <td>{{ e.phone }}</td>
-          <td>₹{{ e.salary }}</td>
-          <td style="display:flex;gap:6px">
-            <a href="{% url 'employee_detail' e.id %}" style="background:#EAF3DE;color:#27500A;padding:4px 10px;border-radius:5px;font-size:11px;font-weight:600;text-decoration:none">👁️</a>
-            <a href="{% url 'employee_edit' e.id %}" style="background:#E6F1FB;color:#185FA5;padding:4px 10px;border-radius:5px;font-size:11px;font-weight:600;text-decoration:none">✏️</a>
-            <a href="{% url 'employee_delete' e.id %}" style="background:#FCEBEB;color:#A32D2D;padding:4px 10px;border-radius:5px;font-size:11px;font-weight:600;text-decoration:none" onclick="return confirm('Delete {{ e.name }}?')">🗑️</a>
-          </td>
-        </tr>
-        {% empty %}
-        <tr>
-          <td colspan="8" style="text-align:center;padding:2rem;color:#9CA3AF">
-            No employees found. <a href="{% url 'create-employee' %}" style="color:#1B3A6B">Add one →</a>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+        <div class="page-title">
+            👥 Employees
+            <span style="font-size:14px;color:#6B7280;font-weight:400">
+                ({{ emp.count }})
+            </span>
+        </div>
+
+        <a href="{% url 'create-employee' %}"
+           class="btn btn-primary">
+            ➕ Add Employee
+        </a>
+
+    </div>
+
+    <!-- Filter Form -->
+    <form method="get" class="filter-row">
+
+        <input
+            type="text"
+            name="search"
+            placeholder="🔍 Search name..."
+            value="{{ search }}">
+
+        <select name="department">
+
+            <option value="">All Departments</option>
+
+            <option value="HR"
+                {% if department == 'HR' %}selected{% endif %}>
+                HR
+            </option>
+
+            <option value="IT"
+                {% if department == 'IT' %}selected{% endif %}>
+                IT
+            </option>
+
+            <option value="Finance"
+                {% if department == 'Finance' %}selected{% endif %}>
+                Finance
+            </option>
+
+            <option value="Marketing"
+                {% if department == 'Marketing' %}selected{% endif %}>
+                Marketing
+            </option>
+
+            <option value="Sales"
+                {% if department == 'Sales' %}selected{% endif %}>
+                Sales
+            </option>
+
+        </select>
+
+        <button type="submit" class="btn btn-primary">
+            Filter
+        </button>
+
+        <a href="{% url 'employee' %}"
+           class="btn"
+           style="background:#F3F4F6;color:#374151">
+            Clear
+        </a>
+
+    </form>
+
+    <!-- Employee Table -->
+    <div class="card">
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>Photo</th>
+                    <th>Emp ID</th>
+                    <th>Name</th>
+                    <th>Dept</th>
+                    <th>Designation</th>
+                    <th>Phone</th>
+                    <th>Salary</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for e in emp %}
+
+                <tr>
+
+                    <!-- Photo -->
+                    <td>
+                        {% if e.photo %}
+                            <img src="{{ e.photo.url }}"
+                                 class="avatar-sm"
+                                 alt="Employee">
+                        {% else %}
+                            <span class="avatar-init">
+                                {{ e.name|first|upper }}
+                            </span>
+                        {% endif %}
+                    </td>
+
+                    <!-- Employee ID -->
+                    <td>
+                        <span class="badge">
+                            {{ e.emp_id }}
+                        </span>
+                    </td>
+
+                    <!-- Name -->
+                    <td>
+                        <a href="{% url 'employee_detail' e.id %}"
+                           style="color:#1B3A6B;font-weight:600;text-decoration:none">
+                            {{ e.name }}
+                        </a>
+                    </td>
+
+                    <td>{{ e.depertment }}</td>
+
+                    <td>{{ e.designation }}</td>
+
+                    <td>{{ e.phone }}</td>
+
+                    <td>₹{{ e.salary }}</td>
+
+                    <!-- Actions -->
+                    <td>
+
+                        <div class="action-row">
+
+                            <!-- View -->
+                            <a href="{% url 'employee_detail' e.id %}"
+                               class="action-btn view-btn">
+                                👁️ View
+                            </a>
+
+                            <!-- Edit -->
+                            <a href="{% url 'employee_edit' e.id %}"
+                               class="action-btn edit-btn">
+                                ✏️ Edit
+                            </a>
+
+                            <!-- Delete -->
+                            <a href="{% url 'employee_delete' e.id %}"
+                               class="action-btn delete-btn"
+                               onclick="return confirm('Delete {{ e.name }}?')">
+                                🗑️ Delete
+                            </a>
+
+                            <!-- Create ID Card -->
+                            <a href="{% url 'create-id' e.id %}"
+                               class="action-btn id-btn">
+                                🪪 Create ID
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="8" class="empty-message">
+                        No employees found.
+                        <a href="{% url 'create-employee' %}"
+                           style="color:#1B3A6B">
+                            Add one →
+                        </a>
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
 </div>
+
 </body>
 </html>
